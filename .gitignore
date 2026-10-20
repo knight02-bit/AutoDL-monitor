@@ -1,0 +1,10 @@
+# 登录态与运行产物
+.env
+state.json
+state.json.tmp
+prices.json
+alerts.log
+__pycache__/
+*.pyc
+.venv/
+venv/

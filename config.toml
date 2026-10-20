@@ -1,0 +1,58 @@
+# AutoDL 空闲 GPU 监控配置
+# 修改后重新运行即可生效；命令行参数优先级高于本文件。
+
+[auth]
+# 网页登录 token（eyJ 开头）。推荐写到 .env 的 AUTODL_TOKEN，避免误提交。
+# 获取方法见 README.md「获取 token」。
+token = ""
+
+[monitor]
+# 轮询间隔（秒）。官方没有公开频率限制，但建议 >= 20 秒，别给服务器添堵。
+interval = 30
+# 间隔随机抖动比例（0.15 = ±15%），避免固定节奏。
+jitter = 0.15
+# 至少几张空闲才提醒 / 才算「有卡」。
+min_idle = 1
+# 只看这些 GPU 型号；留空 = 全部型号（表格只显示有卡的）。
+# gpu = ["RTX 4090", "RTX 5090", "A100-PCIE-40GB"]
+gpu = []
+# 只看这些数据中心；留空 = 全部。可取值：westDC3、beijingDC1、beijingDC2、
+# beijingDC3、chongqingDC1、neimengDC2、neimengDC3、foshanDC1、shanghaiDC1
+# data_center = ["westDC3", "beijingDC1"]
+data_center = []
+# 最高可接受单价（元/小时），0 = 不限。只在能拿到价格时生效。
+max_price = 0
+# true = 表格显示全部型号（含 0 空闲），否则只显示有卡的。
+show_all = false
+# 是否抓取最低价（每个「地区+型号」缓存 6 小时，请求量很小）。
+fetch_prices = true
+# 有卡时自动在浏览器打开创建页。
+open_browser = false
+# 启动后的第一轮就提醒当前已有的卡（false = 只提醒启动后新出现的）。
+alert_on_start = true
+
+[notify]
+# Windows 系统气泡通知。
+toast = true
+# 提示音。
+sound = true
+# 同一「地区+型号」两次提醒的最小间隔（秒），防止刷屏。
+cooldown = 600
+# 可选推送渠道，填 URL 即可，留空不启用。
+# 通用：POST {"text": "..."}
+webhook = ""
+# 钉钉机器人（含 access_token 的完整 webhook 地址）
+dingtalk = ""
+# 飞书机器人
+feishu = ""
+# 企业微信机器人
+wecom = ""
+# Bark（iOS）：https://api.day.app/你的key
+bark = ""
+
+[advanced]
+timeout = 15
+# 价格缓存时长（秒）
+price_ttl = 21600
+state_file = "state.json"
+log_file = "alerts.log"
